@@ -39,7 +39,7 @@ router.get('/', function (req, res) {
 
 // Vehicle route
 
-router.route('/vehicle')
+router.route('/vehicles')
 .post(function (req, res) {
 	var vehicle = new Vehicle();
 		vehicle.make = req.body.make;
@@ -54,13 +54,45 @@ router.route('/vehicle')
 	});
 })
 .get(function (req, res) {
-   vehicle.find(function (err, vehicles) {
+   Vehicle.find(function (err, vehicles) {
 	if (err) {
 	  res.send(err);
 		}
 	  res.json(vehicles);
 	});		
 });
+
+// Get a vehicle by it's id
+
+router.route('/vehicle/:vehicle_id')
+	.get(function (req, res) {
+	Vehicle.findById(req.params.vehicle_id, function (err, vehicle) {
+		if (err) {
+		 res.send(err);
+		}
+		res.json(vehicle);
+		});		
+	});
+
+router.route('/vehicle/make/:make')
+	.get(function (req, res) {
+		Vehicle.find({make:req.params.make}, function (err, vehicle) {
+			if (err) {
+			res.send(err);
+			}
+			res.json(vehicle);
+		});
+	});
+
+router.route('/vehicle/color/:color')
+	.get(function (req, res) {
+		Vehicle.find({color:req.params.color}, function (err, vehicle) {
+			if (err) {
+			res.send(err);
+			}
+			res.json(vehicle);
+				});
+			});
 // Fire up the server
 
 app.listen(port);
