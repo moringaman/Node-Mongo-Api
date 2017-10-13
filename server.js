@@ -29,7 +29,7 @@ app.use('/api', router);
 // This is run before the request can be fulfilled
 
 router.use(function (req, res, next) {
-  console.log('Run tasks such a authentication before moving on to route --here');	
+  console.log('User authentication passed, Running process..');	
 next();	
 });
 
